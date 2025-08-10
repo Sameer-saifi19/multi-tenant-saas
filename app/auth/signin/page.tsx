@@ -1,4 +1,4 @@
-'use client'
+"use client"
 
 import { cn } from "@/lib/utils"
 import { Button } from "@/components/ui/button"
@@ -17,8 +17,8 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from "react";
 import { useRouter } from "next/navigation"
-import { signIn } from "@/auth"
-
+import { Applebtn, Googlebtn } from "@/components/oauthbtn"
+import { Login } from "@/actions/user"
 
 export default function Signin() {
   const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<loginSchema>({
@@ -29,21 +29,15 @@ export default function Signin() {
 
   const [error, setError] = useState<string | null>(null)
 
-  const onsubmit = async (data: loginSchema) => {
-    setError('')
-    const res = await signIn("credentials",{
-      email: data.email,
-      password: data.password,
-      redirect: false
-    })
-
-    if(res?.ok){
-      router.push('/admin/dashboard')
-    }else{
-      setError("Invalid email or password")
+  async function onsubmit(data: loginSchema) {
+    setError(null)
+    try {
+      await Login(data)
+      router.push("/admin/dashboard")
+    } catch (err: any) {
+      setError(err.message || "Invalid email or password")
     }
   }
-
   return (
     <div className={cn("flex flex-col gap-6")}>
       <Card>
@@ -53,12 +47,8 @@ export default function Signin() {
             Welcome back ! Please sign in to Continue
           </CardDescription>
           <div className="grid mt-4 grid-cols-2 gap-4">
-            <Button variant="outline" onClick= { () => signIn('google')} className="w-full gap-4 flex">
-               Google
-            </Button>
-            <Button variant="outline" onClick={ () => signIn('apple')} className="w-full gap-4 flex">
-               Apple
-            </Button>
+            <Googlebtn/>
+            <Applebtn/>
           </div>
           <div className="flex justify-between items-center mt-2">
             <hr className="w-[47%]" />
@@ -139,3 +129,4 @@ export default function Signin() {
     </div>
   )
 }
+

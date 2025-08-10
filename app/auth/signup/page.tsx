@@ -19,6 +19,7 @@ import { signupAction } from "@/actions/user"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
 import { signIn } from "@/auth"
+import { Applebtn, Googlebtn } from "@/components/oauthbtn"
 
 
 export default function Signup() {
@@ -56,12 +57,8 @@ export default function Signup() {
                         Welcome! Please fill in your details to get started
                     </CardDescription>
                     <div className="grid mt-4 grid-cols-2 gap-4">
-                        <Button variant="outline" onClick={() => signIn('google')} className="w-full gap-4 flex">
-                            Google
-                        </Button>
-                        <Button variant="outline" onClick={() => signIn('apple')} className="w-full gap-4 flex">
-                            Apple
-                        </Button>
+                        <Googlebtn/>
+                        <Applebtn/>
                     </div>
                     <div className="flex justify-between items-center mt-2">
                         <hr className="w-[47%]" />

@@ -1,4 +1,4 @@
-import NextAuth from "next-auth";
+import NextAuth, {CredentialsSignin} from "next-auth";
 import { prisma } from "./lib/prisma";
 import { PrismaAdapter } from "@auth/prisma-adapter";
 import Google from "next-auth/providers/google";
@@ -13,39 +13,59 @@ export const { handlers, signIn, signOut, auth } = NextAuth({
       clientSecret: process.env.GOOGLE_CLIENT_SECRET!,
     }),
     Credentials({
+      name: "Credentials",
+
       credentials: {
         email: {},
         password: {},
       },
       authorize: async (credentials) => {
-        const email = credentials.email as string | undefined;
-        const password = credentials.password as string | undefined;
-        if (!email || !password) return null;
+        try {
+          
+          if (!credentials) return null;
 
-        const user = await prisma.user.findUnique({
-          where: {
-            email: email,
-          },
-        });
+          const email = credentials?.email as string | undefined;
+          const password = credentials?.password as string | undefined; 
 
-        if (!user || !user.password) return null;
+          if (!email || !password) {
+            throw new CredentialsSignin("please provide both email & password")
+          };
+          
+          const user = await prisma.user.findUnique({ where: { email } });
 
-        const isValid = await bcrypt.compare(
-          password,
-          user.password
-        );
+          if (!user) {
+          throw new Error("Invalid email or password");
+        }
 
-        if (!isValid) return null;
+        if (!user.password) {
+          throw new Error("Invalid email or password");
+        }
 
-        return user;
+          const isValid = await bcrypt.compare(password, user.password);
+
+          if (!isValid) {
+            throw new Error("Password did not match")
+          };
+
+          // Return only user object fields you want exposed to the session
+          return {
+            id: user.id,
+            email: user.email,
+            name: user.name,
+            role: user.role
+          };
+        } catch (error) {
+          console.error("Authorize error:", error);
+          return null;
+        }
       },
     }),
   ],
-  pages:{
-    signIn: "/auth/signin"
+  pages: {
+    signIn: "/auth/signin",
   },
-  session:{
-    strategy:"jwt"
+  session: {
+    strategy: "jwt",
   },
-  secret: process.env.AUTH_SECRET
+  secret: process.env.AUTH_SECRET,
 });
