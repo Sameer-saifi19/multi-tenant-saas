@@ -9,19 +9,18 @@ datasource db {
 }
 
 model User {
-  id             String    @id @default(cuid())
-  name           String?
-  email          String?   @unique
-  emailVerified  DateTime?
-  password       String?   // only used for credentials login
-  image          String?
-  role           Role      @default(ADMIN)
-  organizationId String?
-  organization   Organization? @relation(fields: [organizationId], references: [id])
-  accounts       Account[]
-  sessions       Session[]
-  createdAt      DateTime  @default(now())
-  updatedAt      DateTime  @updatedAt
+  id            String    @id @default(cuid())
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  role          Role      @default(ADMIN)
+  gym           Gym?
+  accounts      Account[]
+  sessions      Session[]
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
 }
 
 model Account {
@@ -31,12 +30,12 @@ model Account {
   type              String
   provider          String
   providerAccountId String
-  refresh_token     String?  @db.Text
-  access_token      String?  @db.Text
+  refresh_token     String? @db.Text
+  access_token      String? @db.Text
   expires_at        Int?
   token_type        String?
   scope             String?
-  id_token          String?  @db.Text
+  id_token          String? @db.Text
   session_state     String?
 
   @@unique([provider, providerAccountId])
@@ -58,14 +57,19 @@ model VerificationToken {
   @@unique([identifier, token])
 }
 
-model Organization {
+model Gym {
   id        String   @id @default(cuid())
   name      String
-  users     User[]
+  logo      String? 
+  address   String
+  phone     String
+  userId    String   @unique
+  user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
 }
 
 enum Role {
-  ADMIN
+  ADMIN 
   STAFF
 }
