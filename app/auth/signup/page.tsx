@@ -18,9 +18,8 @@ import { motion, AnimatePresence } from 'framer-motion';
 import { signupAction } from "@/actions/user"
 import { useState } from "react"
 import { useRouter } from "next/navigation"
-import { signIn } from "@/auth"
-import { Applebtn, Googlebtn } from "@/components/oauthbtn"
-
+import { signIn } from "next-auth/react"
+import { GoogleIcon } from "@/components/ui/icons/google"
 
 export default function Signup() {
     const { register, handleSubmit, formState: { errors, isSubmitting, isValid } } = useForm<signupSchema>({
@@ -56,9 +55,10 @@ export default function Signup() {
                     <CardDescription className="text-center">
                         Welcome! Please fill in your details to get started
                     </CardDescription>
-                    <div className="grid mt-4 grid-cols-2 gap-4">
-                        <Googlebtn/>
-                        <Applebtn/>
+                    <div className="grid mt-4">
+                        <Button variant="outline" type="submit" onClick={() => signIn('google', { callbackUrl: "/admin/dashboard" })} className="w-full gap-3 flex">
+                            <GoogleIcon/> Sign in with Google
+                        </Button>
                     </div>
                     <div className="flex justify-between items-center mt-2">
                         <hr className="w-[47%]" />
@@ -146,7 +146,7 @@ export default function Signup() {
                                     Continue
                                 </Button>
                             </div>
-                            
+
                         </div>
                         <div className="mt-4 text-center text-sm">
                             Already have an account?{" "}

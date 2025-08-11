@@ -17,11 +17,11 @@ import { zodResolver } from "@hookform/resolvers/zod"
 import { motion, AnimatePresence } from 'framer-motion';
 import { useState } from "react";
 import { useRouter } from "next/navigation"
-import { Applebtn, Googlebtn } from "@/components/oauthbtn"
-import { Login } from "@/actions/user"
+import { signIn } from "next-auth/react"
+import { GoogleIcon } from "@/components/ui/icons/google"
 
 export default function Signin() {
-  const { register, handleSubmit, formState: { errors, isSubmitting } } = useForm<loginSchema>({
+  const { register, handleSubmit, formState: { errors, isSubmitting, isValid } } = useForm<loginSchema>({
     resolver: zodResolver(loginSchema),
     mode: 'onChange'
   })
@@ -29,26 +29,36 @@ export default function Signin() {
 
   const [error, setError] = useState<string | null>(null)
 
-  async function onsubmit(data: loginSchema) {
+  async function onsubmit(data: { email: string, password: string }) {
     setError(null)
-    try {
-      await Login(data)
-      router.push("/admin/dashboard")
-    } catch (err: any) {
-      setError(err.message || "Invalid email or password")
+
+    const result = await signIn("credentials", {
+      redirect: false,
+      email: data.email,
+      password: data.password
+    });
+
+    if (result?.error) {
+      setError("Invalid credentials");
+      return;
+    }
+
+    if (result?.ok) {
+      router.push('/admin/dashboard')
     }
   }
   return (
     <div className={cn("flex flex-col gap-6")}>
       <Card>
         <CardHeader>
-          <CardTitle className="text-center">Sign into ===</CardTitle>
+          <CardTitle className="text-center">Sign into FitX</CardTitle>
           <CardDescription className="text-center">
             Welcome back ! Please sign in to Continue
           </CardDescription>
-          <div className="grid mt-4 grid-cols-2 gap-4">
-            <Googlebtn/>
-            <Applebtn/>
+          <div className="grid mt-4">
+            <Button variant="outline" type="submit" onClick={() => signIn('google', { callbackUrl: "/admin/dashboard" })} className="w-full gap-3 flex">
+              <GoogleIcon />Sign in with Google
+            </Button>
           </div>
           <div className="flex justify-between items-center mt-2">
             <hr className="w-[47%]" />
@@ -102,17 +112,17 @@ export default function Signin() {
                 </AnimatePresence>
               </div>
               <AnimatePresence>
-                  {error &&
-                    <motion.p initial={{ opacity: 0, y: -5 }}
-                      animate={{ opacity: 1, y: 0 }}
-                      exit={{ opacity: 0, y: -5 }}
-                      transition={{ duration: 0.2 }}
-                      className="text-red-500 text-sm">
-                      {error}
-                    </motion.p>}
-                </AnimatePresence>
+                {error &&
+                  <motion.p initial={{ opacity: 0, y: -5 }}
+                    animate={{ opacity: 1, y: 0 }}
+                    exit={{ opacity: 0, y: -5 }}
+                    transition={{ duration: 0.2 }}
+                    className="text-red-500 text-sm">
+                    {error}
+                  </motion.p>}
+              </AnimatePresence>
               <div className="flex flex-col gap-3">
-                <Button  type="submit" className="w-full">
+                <Button disabled={!isValid} type="submit" className="w-full">
                   {isSubmitting ? 'signing...' : 'sign in'}
                 </Button>
               </div>
