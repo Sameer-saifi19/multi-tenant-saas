@@ -67,9 +67,45 @@ model Gym {
   user      User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   createdAt DateTime @default(now())
   updatedAt DateTime @updatedAt
+
+  Member Member[]
 }
 
 enum Role {
   ADMIN 
   STAFF
+}
+
+model Member {
+  id              String   @id @default(cuid())
+  firstName       String
+  lastName        String?
+  email           String?   @unique
+  phone           String?   @unique
+  gender          Gender?
+  dateOfBirth     DateTime?
+  joinDate        DateTime  @default(now())
+  membershipType  String?  
+  membershipStart DateTime?
+  membershipEnd   DateTime? 
+  notes           String?  
+  status          MemberStatus @default(ACTIVE)
+
+  gymId           String
+  gym             Gym       @relation(fields: [gymId], references: [id], onDelete: Cascade)
+
+  createdAt       DateTime  @default(now())
+  updatedAt       DateTime  @updatedAt
+}
+
+enum Gender {
+  MALE
+  FEMALE
+  OTHER
+}
+
+enum MemberStatus {
+  ACTIVE
+  INACTIVE
+  EXPIRED
 }

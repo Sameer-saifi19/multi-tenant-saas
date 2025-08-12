@@ -8,7 +8,7 @@ export default async function Dashboard(){
     }
     return(
         <>
-            <div>Hello</div>
+            <div>{session.user?.name}</div>
         </>
     )
 }

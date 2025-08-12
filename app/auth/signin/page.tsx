@@ -44,7 +44,7 @@ export default function Signin() {
     }
 
     if (result?.ok) {
-      router.push('/admin/dashboard')
+      router.push('/create-organization')
     }
   }
   return (
