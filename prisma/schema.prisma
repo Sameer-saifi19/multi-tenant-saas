@@ -86,7 +86,7 @@ model Member {
   dateOfBirth     DateTime?
   joinDate        DateTime  @default(now())
   membershipType  String?  
-  membershipStart DateTime?
+  membershipStart DateTime? 
   membershipEnd   DateTime? 
   notes           String?  
   status          MemberStatus @default(ACTIVE)
