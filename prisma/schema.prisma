@@ -1,0 +1,103 @@
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+model User {
+  id            String    @id @default(cuid())
+  name          String?
+  email         String    @unique
+  emailVerified DateTime?
+  password      String?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  gyms          Gym[]     @relation("GymOwner")
+  createdAt     DateTime  @default(now())
+  updatedAt     DateTime  @updatedAt
+}
+
+model Account {
+  userId            String
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String?
+  access_token      String?
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String?
+  session_state     String?
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@id([provider, providerAccountId])
+}
+
+model Session {
+  sessionToken String   @unique
+  userId       String
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
+model VerificationToken {
+  identifier String
+  token      String
+  expires    DateTime
+
+  @@id([identifier, token])
+}
+
+model Gym {
+  id        String    @id @default(cuid())
+  name      String
+  address   String?
+  logoUrl   String?
+  owner     User?     @relation("GymOwner", fields: [ownerId], references: [id])
+  ownerId   String?
+  members   Member[]
+  payments  Payment[]
+  createdAt DateTime  @default(now())
+  updatedAt DateTime  @updatedAt
+}
+
+model Member {
+  id       String    @id @default(cuid())
+  name     String
+  email    String    @unique
+  phone    String?
+  joinedAt DateTime  @default(now())
+  gym      Gym?      @relation(fields: [gymId], references: [id])
+  gymId    String?
+  payments Payment[]
+}
+
+model Payment {
+  id        String        @id @default(cuid())
+  amount    Float
+  status    PaymentStatus @default(PENDING)
+  date      DateTime      @default(now())
+  memberId  String?
+  member    Member?       @relation(fields: [memberId], references: [id])
+  Gym       Gym?          @relation(fields: [gymId], references: [id])
+  gymId     String?
+  paymentId String?
+}
+
+enum PaymentStatus {
+  PENDING
+  SUCCESS
+  FAILED
+}
