@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { signupSchema } from "../authSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { signupAction } from "@/actions/user";
+import { signupAction } from "@/actions/users";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";

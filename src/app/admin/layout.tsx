@@ -1,4 +1,5 @@
-import AppSidebar from "@/components/global/appSidebar";
+import Navbar from "@/components/global/Navbar";
+import AppSidebar from "@/components/global/Sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import React from "react";
 
@@ -12,6 +13,7 @@ const DashboardLayout = ({ children }: Props) => {
       <SidebarProvider>
         <AppSidebar/>
         <main className="w-full">
+          <Navbar/>
           <div className="p-4">{children}</div>
         </main>
       </SidebarProvider>

@@ -74,14 +74,16 @@ model Gym {
 }
 
 model Member {
-  id       String    @id @default(cuid())
-  name     String
-  email    String    @unique
-  phone    String?
-  joinedAt DateTime  @default(now())
-  gym      Gym?      @relation(fields: [gymId], references: [id])
-  gymId    String?
-  payments Payment[]
+  id           String    @id @default(cuid())
+  name         String
+  email        String    @unique
+  profileImage String?
+  phone        String?
+  joinedAt     DateTime  @default(now())
+  gym          Gym?      @relation(fields: [gymId], references: [id])
+  gymId        String?
+  status       MemberStatus
+  payments     Payment[]
 }
 
 model Payment {
@@ -100,4 +102,9 @@ enum PaymentStatus {
   PENDING
   SUCCESS
   FAILED
+}
+
+enum MemberStatus {
+  ACTIVE
+  INACTIVE
 }
