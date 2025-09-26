@@ -61,7 +61,7 @@ model VerificationToken {
 }
 
 model Gym {
-  id        String    @id @default(cuid())
+  id        String    @id @default(uuid())
   name      String
   address   String?
   logoUrl   String?
@@ -74,13 +74,13 @@ model Gym {
 }
 
 model Member {
-  id           String    @id @default(cuid())
+  id           String       @id @default(cuid())
   name         String
-  email        String    @unique
+  email        String       @unique
   profileImage String?
   phone        String?
-  joinedAt     DateTime  @default(now())
-  gym          Gym?      @relation(fields: [gymId], references: [id])
+  joinedAt     DateTime     @default(now())
+  gym          Gym?         @relation(fields: [gymId], references: [id])
   gymId        String?
   status       MemberStatus
   payments     Payment[]
