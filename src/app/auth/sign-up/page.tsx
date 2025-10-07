@@ -15,7 +15,7 @@ import { useForm } from "react-hook-form";
 import { signupSchema } from "../authSchema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { motion, AnimatePresence } from "framer-motion";
-import { signupAction } from "@/actions/users";
+import { signupAction } from "@/actions/user";
 import { useState } from "react";
 import { useRouter } from "next/navigation";
 import { signIn } from "next-auth/react";
@@ -42,7 +42,7 @@ export default function Signup() {
       } else {
         setError(null);
         setSuccess("User created Successfully");
-        router.push("/signin");
+        router.push("/auth/sign-in");
       }
     } catch (error: any) {
       console.error(error.message || "Something went wrong");

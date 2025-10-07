@@ -1,27 +1,26 @@
-import { auth } from "@/auth";
-import { prisma } from "@/lib/prisma";
+"use server"
 
-export const getAllMembers = async (gymId: string) => {
-  try {
-    const session = await auth();
+import { auth } from "@/auth"
+import { prisma } from "@/lib/prisma"
 
-    if (!session) return { status: 404, message: "Unauthenticated" };
+export const getAllMembers = async () => {
+    const session = await auth()
 
-    const members = await prisma.member.findMany({
-      where: {
-        gymId,
-      },
-    });
+    if(!session) return { status: 403, message: "Unauthenticated"}
 
-    if (!members || members.length === 0)
-      return { status: 403, message: "You don't have any members yet." };
+    try {
+        const members = await prisma.member.findMany({
+            where: {
+                gymId: session.user?.id
+            }
+        })
 
-    if (members && members.length > 0) {
-      return { status: 200, data: members };
+        if(!members || members.length === 0) {
+            return {status: 401, message: "No members in the gym"}
+        }
+
+        return { status: 200, data: members}
+    } catch (error) {
+        return {status: 500, message: "Something went wrong", data: []}
     }
-
-    return { status: 404, data: [] };
-  } catch (error) {
-    return { status: 400, data: [] };
-  }
-};
+}
