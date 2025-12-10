@@ -9,7 +9,7 @@ export const auth = betterAuth({
     }),
     emailAndPassword:{
         enabled: true,
-        minPasswordLength: 8
+        minPasswordLength: 6
     },
     advanced: {
         database:{
@@ -27,8 +27,15 @@ export const auth = betterAuth({
             clientId: String(process.env.FACEBOOK_CLIENT_ID),
             clientSecret: String(process.env.FACEBOOK_CLIENT_SECRET)
         }
-    }
-    ,
+    },
+        user:{
+            additionalFields:{
+                role: {
+                    type: ["USER", "ADMIN"],
+                    input: false
+                }
+            }
+        },
     plugins: [nextCookies()]
 });
 
