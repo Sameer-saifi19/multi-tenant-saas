@@ -1,3 +1,6 @@
+'use client'
+
+import { signInEmail } from "@/actions/user.action";
 import { OauthButton } from "@/components/global/oauthbtn";
 import { Button } from "@/components/ui/button";
 import {
@@ -10,8 +13,31 @@ import {
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
 import { cn } from "@/lib/utils";
+import { useRouter } from "next/navigation";
+import { useState } from "react";
+import { toast } from "sonner";
 
 export default function LoginForm() {
+  const [isPending, setIsPending] = useState(false)
+
+  const router = useRouter()
+  async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
+      evt.preventDefault()
+      setIsPending(true)
+      
+      const formdata = new FormData(evt.currentTarget)
+  
+      const { error } = await signInEmail(formdata)
+  
+       if (error) {
+        toast.error(error);
+        setIsPending(false);
+      } else {
+        toast.success("Login successfully. Welcome to Fitx.");
+        router.push("/profile");
+      }
+    }
+
   return (
     <div className={cn("flex flex-col gap-6")}>
       <Card >
@@ -27,7 +53,7 @@ export default function LoginForm() {
               <OauthButton provider="google" />
             </div>
             <div className="grid mt-4">
-              <OauthButton provider="github" />
+              <OauthButton provider="facebook" />
             </div>
           </div>
           <div className="flex justify-between items-center mt-2">
@@ -38,12 +64,12 @@ export default function LoginForm() {
         </CardHeader>
 
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="email">Email</Label>
                 <Input
-                  id="email"
+                  name="email"
                   type="email"
                   placeholder="john@example.com"
                   required
@@ -60,11 +86,11 @@ export default function LoginForm() {
                     Forgot your password?
                   </a>
                 </div>
-                <Input id="password" type="password" required />
+                <Input name="password" type="password" required />
               </div>
 
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full text-white">
+                <Button type="submit" disabled={isPending} className="w-full text-white">
                   Signin to Fitx
                 </Button>
               </div>

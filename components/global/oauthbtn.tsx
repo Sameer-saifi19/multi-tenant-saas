@@ -4,10 +4,10 @@ import { useState } from "react";
 import { Button } from "../ui/button";
 import { signIn } from "@/lib/auth-client";
 import { IconType } from "react-icons/lib";
-import { FaGithub, FaGoogle } from "react-icons/fa";
+import { FaFacebook, FaGoogle } from "react-icons/fa";
 
 interface OauthButtonProps {
-  provider: "google" | "github";
+  provider: "google" | "facebook";
   signUp?: Boolean;
   icon?: IconType
 }
@@ -29,11 +29,12 @@ export const OauthButton = ({ provider, signUp }: OauthButtonProps) => {
 
   const action = signUp ? "up" : "in";
 
-  const providerName = provider === "google" ? "Google" : "Github";
+  const providerName = provider === "google" ? "Google" : "FaceBook";
 
+  // Pick icon automatically based on provider
   const Icons: Record<OauthButtonProps["provider"], IconType> = {
     google: FaGoogle,
-    github: FaGithub,
+    facebook: FaFacebook,
   };
 
   const Icon = Icons[provider];

@@ -1,3 +1,5 @@
+"use client"
+
 import { OauthButton } from "@/components/global/oauthbtn";
 import { Button } from "@/components/ui/button";
 import {
@@ -9,9 +11,34 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
+import {  signUpEmail } from "@/actions/user.action";
 import { cn } from "@/lib/utils";
+import { useState } from "react";
+import { toast } from "sonner";
+import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
+
+  const [isPending, setIsPending] = useState(false)
+  const router = useRouter()
+
+  async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
+    evt.preventDefault()
+    setIsPending(true)
+    
+    const formdata = new FormData(evt.currentTarget)
+
+    const { error } = await signUpEmail(formdata)
+
+     if (error) {
+      toast.error(error);
+      setIsPending(false);
+    } else {
+      toast.success("Signup Success. You're all set.");
+      router.push("/auth/signin");
+    }
+  }
+
   return (
     <div className={cn("flex flex-col gap-6")}>
       <Card>
@@ -27,7 +54,7 @@ export default function SignupForm() {
               <OauthButton provider="google" signUp></OauthButton>
             </div>
             <div className="grid mt-4">
-              <OauthButton provider="github" signUp />
+              <OauthButton provider="facebook" signUp />
             </div>
           </div>
           <div className="flex justify-between items-center mt-2">
@@ -38,7 +65,7 @@ export default function SignupForm() {
         </CardHeader>
 
         <CardContent>
-          <form>
+          <form onSubmit={handleSubmit}>
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="email">Name</Label>
@@ -74,7 +101,7 @@ export default function SignupForm() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <Button type="submit" className="w-full text-white">
+                <Button type="submit" disabled={isPending} className="w-full text-white">
                   Sign up to continue
                 </Button>
               </div>
