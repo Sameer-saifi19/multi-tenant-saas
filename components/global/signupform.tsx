@@ -1,4 +1,4 @@
-"use client"
+"use client";
 
 import { OauthButton } from "@/components/global/oauthbtn";
 import { Button } from "@/components/ui/button";
@@ -11,26 +11,25 @@ import {
 } from "@/components/ui/card";
 import { Input } from "@/components/ui/input";
 import { Label } from "@/components/ui/label";
-import {  signUpEmail } from "@/actions/user.action";
+import { signUpEmail } from "@/actions/user/user.action";
 import { cn } from "@/lib/utils";
 import { useState } from "react";
 import { toast } from "sonner";
 import { useRouter } from "next/navigation";
 
 export default function SignupForm() {
-
-  const [isPending, setIsPending] = useState(false)
-  const router = useRouter()
+  const [isPending, setIsPending] = useState(false);
+  const router = useRouter();
 
   async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
-    evt.preventDefault()
-    setIsPending(true)
-    
-    const formdata = new FormData(evt.currentTarget)
+    evt.preventDefault();
+    setIsPending(true);
 
-    const { error } = await signUpEmail(formdata)
+    const formdata = new FormData(evt.currentTarget);
 
-     if (error) {
+    const { error } = await signUpEmail(formdata);
+
+    if (error) {
       toast.error(error);
       setIsPending(false);
     } else {
@@ -101,7 +100,11 @@ export default function SignupForm() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <Button type="submit" disabled={isPending} className="w-full text-white">
+                <Button
+                  type="submit"
+                  disabled={isPending}
+                  className="w-full text-white"
+                >
                   Sign up to continue
                 </Button>
               </div>

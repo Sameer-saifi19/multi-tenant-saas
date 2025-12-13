@@ -1,6 +1,6 @@
-'use client'
+"use client";
 
-import { signInEmail } from "@/actions/user.action";
+import { signInEmail } from "@/actions/user/user.action";
 import { OauthButton } from "@/components/global/oauthbtn";
 import { Button } from "@/components/ui/button";
 import {
@@ -18,29 +18,29 @@ import { useState } from "react";
 import { toast } from "sonner";
 
 export default function LoginForm() {
-  const [isPending, setIsPending] = useState(false)
+  const [isPending, setIsPending] = useState(false);
 
-  const router = useRouter()
+  const router = useRouter();
   async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
-      evt.preventDefault()
-      setIsPending(true)
-      
-      const formdata = new FormData(evt.currentTarget)
-  
-      const { error } = await signInEmail(formdata)
-  
-       if (error) {
-        toast.error(error);
-        setIsPending(false);
-      } else {
-        toast.success("Login successfully. Welcome to Fitx.");
-        router.push("/profile");
-      }
+    evt.preventDefault();
+    setIsPending(true);
+
+    const formdata = new FormData(evt.currentTarget);
+
+    const { error } = await signInEmail(formdata);
+
+    if (error) {
+      toast.error(error);
+      setIsPending(false);
+    } else {
+      toast.success("Login successfully. Welcome to Fitx.");
+      router.push("/onboarding");
     }
+  }
 
   return (
     <div className={cn("flex flex-col gap-6")}>
-      <Card >
+      <Card>
         <CardHeader>
           <CardTitle className="text-center text-xl">
             Sign in to your Fitx account
@@ -90,7 +90,11 @@ export default function LoginForm() {
               </div>
 
               <div className="flex flex-col gap-3">
-                <Button type="submit" disabled={isPending} className="w-full text-white">
+                <Button
+                  type="submit"
+                  disabled={isPending}
+                  className="w-full text-white"
+                >
                   Signin to Fitx
                 </Button>
               </div>

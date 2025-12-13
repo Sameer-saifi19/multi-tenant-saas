@@ -51,7 +51,7 @@ export const signInEmail = async (formdata: FormData) => {
       body: {
         email,
         password,
-        callbackURL: '/profile'
+        callbackURL: '/onboarding'
       },
     });
 

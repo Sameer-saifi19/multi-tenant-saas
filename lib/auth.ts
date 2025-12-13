@@ -16,13 +16,15 @@ export const auth = betterAuth({
             generateId: false
         }
     },
+    session:{
+        expiresIn: 7 * 24 * 60 * 60 
+    },
     socialProviders:{
         google:{
             clientId: String(process.env.GOOGLE_CLIENT_ID),
             clientSecret: String(process.env.GOOGLE_CLIENT_SECRET)
         },
 
-        //ADD FACEBOOK OAUTH
         facebook: {
             clientId: String(process.env.FACEBOOK_CLIENT_ID),
             clientSecret: String(process.env.FACEBOOK_CLIENT_SECRET)

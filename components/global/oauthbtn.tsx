@@ -20,7 +20,7 @@ export const OauthButton = ({ provider, signUp }: OauthButtonProps) => {
 
     await signIn.social({
       provider,
-      callbackURL: "/profile",
+      callbackURL: "/onboarding",
       errorCallbackURL: "/auth/signin/error",
     });
 
@@ -29,7 +29,7 @@ export const OauthButton = ({ provider, signUp }: OauthButtonProps) => {
 
   const action = signUp ? "up" : "in";
 
-  const providerName = provider === "google" ? "Google" : "FaceBook";
+  const providerName = provider === "google" ? "Google" : "Facebook";
 
   // Pick icon automatically based on provider
   const Icons: Record<OauthButtonProps["provider"], IconType> = {
