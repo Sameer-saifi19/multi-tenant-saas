@@ -48,7 +48,7 @@ function Herosection() {
           </Button>
         </div>
 
-        <div cl>
+        <div>
             <p className="text-muted-foreground">Built with ❤️ by Sameer Saifi</p>
         </div>
       </div>
