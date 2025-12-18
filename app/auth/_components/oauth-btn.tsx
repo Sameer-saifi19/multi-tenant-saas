@@ -1,7 +1,7 @@
-'use client';
+"use client";
 
 import { useState } from "react";
-import { Button } from "../ui/button";
+import { Button } from "../../../components/ui/button";
 import { signIn } from "@/lib/auth-client";
 import { FaGoogle } from "react-icons/fa";
 

@@ -1,4 +1,4 @@
-import ResetPasswordForm from "@/components/global/reset-pass-form";
+import ResetPasswordForm from "@/app/auth/_components/reset-pass-form";
 import { redirect } from "next/navigation";
 
 interface PageProps {

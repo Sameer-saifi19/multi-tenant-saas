@@ -1,9 +1,9 @@
-import Registerform from "@/components/global/register-form";
+import Registerform from "@/app/auth/_components/register-form";
 
 export default function Register() {
-    return (
-        <>
-            <Registerform/>
-        </>
-    )
+  return (
+    <>
+      <Registerform />
+    </>
+  );
 }

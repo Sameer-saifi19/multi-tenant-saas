@@ -1,9 +1,9 @@
-import LoginForm from "@/components/global/login-form";
+import LoginForm from "@/app/auth/_components/login-form";
 
 export default function Signup() {
-    return (
-        <>
-            <LoginForm/>
-        </>
-    )
+  return (
+    <>
+      <LoginForm />
+    </>
+  );
 }
