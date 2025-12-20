@@ -1,9 +1,7 @@
-import { GridBackground } from "@/components/theme/grid";
-
-export default function HomePage() {
+export default function Home() {
   return (
     <>
-      <GridBackground />
+      <h2>Home</h2>
     </>
-  );
+  )
 }

@@ -11,7 +11,7 @@ export const signupEmailAction = async (formdata: FormData) => {
   const password = String(formdata.get("password"));
 
   try {
-    const signup = await auth.api.signUpEmail({
+    await auth.api.signUpEmail({
       body: {
         name,
         email,
@@ -33,7 +33,7 @@ export const signinEmailAction = async (formdata: FormData) => {
   const password = String(formdata.get("password"));
 
   try {
-    const login = await auth.api.signInEmail({
+    await auth.api.signInEmail({
       body: {
         email,
         password,
@@ -73,4 +73,16 @@ export const changePasswordAction = async (formData: FormData) => {
     }
     return { error: "Internal Server Error" };
   }
+};
+
+export const checkAuth = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  if (!session?.user.id) {
+    return { status: 403, message: "Unauthenticated" };
+  }
+
+  return { session };
 };
