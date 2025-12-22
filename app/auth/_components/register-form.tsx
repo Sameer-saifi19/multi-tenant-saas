@@ -21,7 +21,7 @@ import { useRouter } from "next/navigation";
 export default function Registerform() {
   const [isPending, setIsPending] = useState(false);
   const [showPassword, setShowPassword] = useState(false);
-  const router = useRouter()
+  const router = useRouter();
 
   async function handleSubmit(evt: React.FormEvent<HTMLFormElement>) {
     evt.preventDefault();
@@ -29,15 +29,14 @@ export default function Registerform() {
 
     const formdata = new FormData(evt.currentTarget);
 
-    const submit = await signupEmailAction(formdata)
+    const submit = await signupEmailAction(formdata);
 
-     if (submit?.status !== 200) {
+    if (submit?.status !== 200) {
       setIsPending(false);
       toast.error("Something went wrong");
     } else {
       router.push("/auth/verify");
     }
-
   }
 
   return (
@@ -129,7 +128,7 @@ export default function Registerform() {
             </div>
             <div className="mt-4 text-center text-sm">
               Already have an account?{" "}
-              <a href="/auth/signin" className="underline underline-offset-4">
+              <a href="/auth/sign-in" className="underline underline-offset-4">
                 Sign in
               </a>
             </div>

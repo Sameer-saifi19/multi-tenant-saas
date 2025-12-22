@@ -7,7 +7,7 @@ export const createGymSchema = z.object({
     .max(50, "name should be less than 50 characters"),
   logo: z.string().optional(),
   slug: z.string(),
-  phone: z.string(),
+  phone: z.string().optional(),
   email: z.email("email is required"),
   addressLine1: z.string().optional(),
   city: z.string().optional(),

@@ -38,12 +38,12 @@ export default function Page() {
             </div>
 
             <div className="mt-4 text-center gap-2 text-sm flex items-center justify-center">
-               <ArrowLeftIcon
+              <ArrowLeftIcon
                 className="w-4 h-4 stroke-1 text-black"
                 alignmentBaseline="baseline"
               />
               <a
-                href="/auth/signin"
+                href="/auth/sign-in"
                 className="underline text-black underline-offset-4"
               >
                 Back to sign in

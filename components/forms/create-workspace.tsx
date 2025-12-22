@@ -8,24 +8,31 @@ import {
   CardHeader,
   CardTitle,
 } from "../ui/card";
-import { useForm } from "react-hook-form";
-import { zodResolver } from "@hookform/resolvers/zod";
-import { createGymSchema } from "@/schema";
-import { Label } from "recharts";
 import { Input } from "../ui/input";
 import { Button } from "../ui/button";
+import { useForm } from "react-hook-form";
+import { createGymInput, createGymSchema } from "@/schema";
+import { zodResolver } from "@hookform/resolvers/zod";
+import { useMutationData } from "@/hooks/use-mutation";
+import { createGymAction } from "@/app/actions/workspace";
 
-type Props = {};
-
-export default function createGymForm(props: Props) {
-  const {
-    register,
-    handleSubmit,
-    formState: { errors },
-  } = useForm({
+export default function CreateWorkspace() {
+  const { register, handleSubmit } = useForm<createGymInput>({
     resolver: zodResolver(createGymSchema),
     mode: "onBlur",
   });
+
+  const { mutate, isPending, error } = useMutationData(
+    ["workspace"],
+    createGymAction
+  );
+
+  const onSubmit = async (data: createGymInput) => {
+    mutate(data);
+    console.log(error);
+  };
+
+
   return (
     <>
       <main className="h-screen flex justify-center items-center">
@@ -41,12 +48,11 @@ export default function createGymForm(props: Props) {
             </CardHeader>
 
             <CardContent>
-              <form>
+              <form onSubmit={handleSubmit(onSubmit)}>
                 <div className="flex flex-col gap-6">
                   <div className="grid gap-3">
-                    <Label>name</Label>
                     <Input
-                      name="name"
+                      {...register("name")}
                       type="text"
                       placeholder="eg. Iron den gym"
                       required
@@ -54,66 +60,92 @@ export default function createGymForm(props: Props) {
                   </div>
 
                   <div className="grid gap-3">
-                    <Label>Email</Label>
                     <Input
-                      name="email"
+                      {...register("slug")}
+                      type="text"
+                      placeholder="domain.com/iron-den"
+                      required
+                    />
+                  </div>
+
+                  <div className="grid gap-3">
+                    <Input
+                      {...register("email")}
                       type="email"
                       placeholder="john@example.com"
                       required
                     />
                   </div>
+
                   <div className="grid gap-3">
-                    <Label>phone</Label>
                     <Input
-                      name=""
+                      {...register("phone")}
                       type="text"
-                      placeholder="john@example.com"
-                      required
+                      placeholder="775-224-7654"
                     />
                   </div>
+
                   <div className="grid gap-3">
-                    <Label>Phone</Label>
                     <Input
-                      name="phone"
+                      {...register("addressLine1")}
                       type="text"
-                      placeholder="john@example.com"
-                      required
+                      placeholder="172, new york USA"
                     />
                   </div>
+
                   <div className="grid gap-3">
-                    <Label>Phone</Label>
                     <Input
-                      name="phone"
+                      {...register("city")}
                       type="text"
-                      placeholder="john@example.com"
-                      required
+                      placeholder="Los angeles"
                     />
                   </div>
+
                   <div className="grid gap-3">
-                    <Label>Phone</Label>
                     <Input
-                      name="phone"
+                      {...register("state")}
                       type="text"
-                      placeholder="john@example.com"
-                      required
+                      placeholder="California"
                     />
                   </div>
+
                   <div className="grid gap-3">
-                    <Label>Phone</Label>
                     <Input
-                      name="phone"
+                      {...register("country")}
                       type="text"
-                      placeholder="john@example.com"
-                      required
+                      placeholder="USA"
                     />
                   </div>
+
                   <div className="grid gap-3">
-                    <Label>Phone</Label>
                     <Input
-                      name="phone"
+                      {...register("postalCode")}
                       type="text"
-                      placeholder="john@example.com"
-                      required
+                      placeholder="16253"
+                    />
+                  </div>
+
+                  <div className="grid gap-3">
+                    <Input {...register("openingTime")} type="time" required />
+                  </div>
+
+                  <div className="grid gap-3">
+                    <Input {...register("closingTime")} type="time" required />
+                  </div>
+
+                  <div className="grid gap-3">
+                    <Input
+                      {...register("openDays")}
+                      type="text"
+                      placeholder="mon to sat"
+                    />
+                  </div>
+
+                  <div>
+                    <Input
+                      type="number"
+                      {...register("maxMembers", { valueAsNumber: true })}
+                      placeholder="Maximum members"
                     />
                   </div>
 

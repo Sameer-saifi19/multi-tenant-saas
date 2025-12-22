@@ -39,15 +39,13 @@ model Workspace {
   state        String?
   country      String?
   postalCode   String?
-
-  openingTime String
-  closingTime String
-  openDays    String
-  maxMembers  Int
-
-  user    User     @relation(fields: [userId], references: [id], onDelete: Cascade)
-  userId  String   @db.Uuid
-  members Member[]
+  openingTime  String
+  closingTime  String
+  openDays     String
+  maxMembers   Int
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+  userId       String   @db.Uuid
+  members      Member[]
 
   @@index([userId])
   @@map("workspaces")
@@ -148,4 +146,3 @@ model Verification {
   @@index([identifier])
   @@map("verifications")
 }
-

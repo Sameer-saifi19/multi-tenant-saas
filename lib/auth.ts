@@ -13,11 +13,11 @@ export const auth = betterAuth({
   emailAndPassword: {
     enabled: true,
     minPasswordLength: 6,
-    autoSignIn: false,
+    autosignin: false,
     requireEmailVerification: true,
     resetPasswordTokenExpiresIn: 24 * 60 * 60,
-    
-    sendResetPassword: async ({ user, url}) => {
+
+    sendResetPassword: async ({ user, url }) => {
       const email = user.email.endsWith("@example.com")
         ? "sameerk1710@gmail.com"
         : user.email;
@@ -35,7 +35,7 @@ export const auth = betterAuth({
   emailVerification: {
     sendOnSignUp: true,
     expiresIn: 60 * 60,
-    autoSignInAfterVerification: true,
+    autosigninAfterVerification: true,
     sendVerificationEmail: async ({ user, url }) => {
       const email = user.email.endsWith("@example.com")
         ? "sameerk1710@gmail.com"
@@ -58,8 +58,8 @@ export const auth = betterAuth({
   socialProviders: {
     google: {
       clientId: process.env.GOOGLE_CLIENT_ID as string,
-      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string
-    }
+      clientSecret: process.env.GOOGLE_CLIENT_SECRET as string,
+    },
   },
   advanced: {
     database: {

@@ -33,7 +33,7 @@ export const signinEmailAction = async (formdata: FormData) => {
   const password = String(formdata.get("password"));
 
   try {
-    await auth.api.signInEmail({
+    await auth.api.signinEmail({
       body: {
         email,
         password,

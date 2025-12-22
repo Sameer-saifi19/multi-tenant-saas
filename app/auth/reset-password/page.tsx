@@ -8,7 +8,7 @@ interface PageProps {
 export default async function Page({ searchParams }: PageProps) {
   const token = (await searchParams).token;
 
-  if (!token) redirect("/auth/signin");
+  if (!token) redirect("/auth/sign-in");
 
   return <ResetPasswordForm token={token} />;
 }

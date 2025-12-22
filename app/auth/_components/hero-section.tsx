@@ -13,9 +13,9 @@ function Herosection() {
 
         {/* Subtitle */}
         <p className="text-muted-foreground text-lg">
-          A production-ready authentication foundation built with
-          Next.js App Router and Better Auth.
-          Designed for correctness, security, and scalability.
+          A production-ready authentication foundation built with Next.js App
+          Router and Better Auth. Designed for correctness, security, and
+          scalability.
         </p>
 
         {/* Feature Highlights */}
@@ -40,24 +40,23 @@ function Herosection() {
         {/* Actions */}
         <div className="flex items-center justify-center gap-4 pt-10">
           <Button asChild size="lg">
-            <Link href="/auth/signup">Sign Up</Link>
+            <Link href="/auth/sign-up">Sign Up</Link>
           </Button>
 
           <Button asChild variant="outline" size="lg">
-            <Link href="/auth/signin">Sign In</Link>
+            <Link href="/auth/sign-in">Sign In</Link>
           </Button>
         </div>
 
         <div>
-            <p className="text-muted-foreground">Built with ❤️ by Sameer Saifi</p>
+          <p className="text-muted-foreground">Built with ❤️ by Sameer Saifi</p>
         </div>
       </div>
     </main>
-  )
+  );
 }
 
-export default Herosection
-
+export default Herosection;
 
 function Feature({
   icon,

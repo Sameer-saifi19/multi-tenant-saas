@@ -1,17 +1,19 @@
+
 type Props = {
-  params: { slug: string };
+  params: {
+    slug: string;
+  };
   children: React.ReactNode;
 };
 
-export default async function WorkspaceLayout({ params, children }: Props) {
+export default async function WorkspaceLayout({ children, params }: Props) {
+    
 
-  const slug = params.slug;
-
-  console.log(slug)
-
-  return (
-    <>
-        {children}
-    </>
-  )
+    return (
+        <>
+            <div>
+                {children}
+            </div>
+        </>
+    )
 }

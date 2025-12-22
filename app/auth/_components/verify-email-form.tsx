@@ -38,7 +38,9 @@ export default function SendVerificationEmailForm() {
         onRequest: () => setIsPending(true),
         onResponse: () => setIsPending(false),
         onError: () => {
-          toast.error("If an account exists for this email, we&apos;ve sent a verification link.");
+          toast.error(
+            "If an account exists for this email, we&apos;ve sent a verification link."
+          );
         },
         onSuccess: () => {
           toast.success("Verification email sent successfully.");
@@ -58,7 +60,8 @@ export default function SendVerificationEmailForm() {
           <CardTitle className="text-xl">Resend Verification Email</CardTitle>
 
           <CardDescription>
-            Enter your email address and we&apos;ll again send you a new verification link.
+            Enter your email address and we&apos;ll again send you a new
+            verification link.
           </CardDescription>
         </CardHeader>
 
@@ -87,7 +90,7 @@ export default function SendVerificationEmailForm() {
 
             <div className="mt-4 flex items-center justify-center gap-2 text-sm">
               <ArrowLeftIcon className="h-4 w-4" />
-              <a href="/auth/signin" className="underline underline-offset-4">
+              <a href="/auth/sign-in" className="underline underline-offset-4">
                 Back to sign in
               </a>
             </div>

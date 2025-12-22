@@ -109,13 +109,13 @@ export default function LoginForm() {
                   disabled={isPending}
                   className="w-full text-white"
                 >
-                  Signin to Fitx
+                  signin to Fitx
                 </Button>
               </div>
             </div>
             <div className="mt-4 text-center text-sm">
               Don&apos;t have an account?{" "}
-              <a href="/auth/signup" className="underline underline-offset-4">
+              <a href="/auth/sign-up" className="underline underline-offset-4">
                 Sign up
               </a>
             </div>

@@ -23,7 +23,7 @@ interface ResetPasswordFormProps {
 
 export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
   const [isPending, setIsPending] = useState(false);
-    const [showPassword, setShowPassword] = useState(false);
+  const [showPassword, setShowPassword] = useState(false);
 
   const router = useRouter();
 
@@ -47,17 +47,17 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
       newPassword: password,
       fetchOptions: {
         onRequest: () => {
-          setIsPending(true)
+          setIsPending(true);
         },
         onResponse: () => {
-          setIsPending(false)
+          setIsPending(false);
         },
         onError: (ctx) => {
-         toast.error(ctx.error.message);
+          toast.error(ctx.error.message);
         },
         onSuccess: () => {
           toast.success("Password reset successfully.");
-          router.push("/auth/signin");
+          router.push("/auth/sign-in");
         },
       },
     });
@@ -71,9 +71,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             <LockIcon className="h-8 w-8 text-primary" />
           </div>
 
-          <CardTitle className="text-xl">
-            Reset your password
-          </CardTitle>
+          <CardTitle className="text-xl">Reset your password</CardTitle>
 
           <CardDescription>
             Create a new password for your Fitx account.
@@ -85,7 +83,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
             <div className="flex flex-col gap-6">
               <div className="grid gap-3">
                 <Label htmlFor="password">New password</Label>
-               <div className="relative">
+                <div className="relative">
                   <Input
                     name="password"
                     type={showPassword ? "text" : "password"}
@@ -128,10 +126,7 @@ export default function ResetPasswordForm({ token }: ResetPasswordFormProps) {
 
             <div className="mt-4 flex items-center justify-center gap-2 text-sm">
               <ArrowLeftIcon className="h-4 w-4" />
-              <a
-                href="/auth/signin"
-                className="underline underline-offset-4"
-              >
+              <a href="/auth/sign-in" className="underline underline-offset-4">
                 Back to sign in
               </a>
             </div>

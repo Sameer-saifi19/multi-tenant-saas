@@ -89,7 +89,7 @@ export const ForgotPasswordForm = () => {
                 className="w-4 h-4 stroke-1"
                 alignmentBaseline="baseline"
               />
-              <a href="/auth/signin" className="underline underline-offset-4">
+              <a href="/auth/sign-in" className="underline underline-offset-4">
                 Back to sign in
               </a>
             </div>
