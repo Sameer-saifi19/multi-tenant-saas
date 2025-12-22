@@ -1,6 +1,7 @@
 "use server";
 
 import { auth } from "@/lib/auth";
+import prisma from "@/lib/prisma";
 import { APIError } from "better-auth";
 import { headers } from "next/headers";
 import { redirect } from "next/navigation";
@@ -33,7 +34,7 @@ export const signinEmailAction = async (formdata: FormData) => {
   const password = String(formdata.get("password"));
 
   try {
-    await auth.api.signinEmail({
+    await auth.api.signInEmail({
       body: {
         email,
         password,
@@ -75,14 +76,31 @@ export const changePasswordAction = async (formData: FormData) => {
   }
 };
 
-export const checkAuth = async () => {
+export const checkSession = async () => {
   const session = await auth.api.getSession({
     headers: await headers(),
   });
 
-  if (!session?.user.id) {
-    return { status: 403, message: "Unauthenticated" };
+  if (!session) {
+    redirect("/auth/sign-in");
+  }
+  return session.session;
+};
+
+export const currentUser = async () => {
+  const session = await auth.api.getSession({
+    headers: await headers(),
+  });
+
+  const user = await prisma.user.findUnique({
+    where: {
+      id: session?.user.id,
+    },
+  });
+
+  if (!user) {
+    return { status: 401, message: "Unauthorized" };
   }
 
-  return { session };
+  return user;
 };

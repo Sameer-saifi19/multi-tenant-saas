@@ -1,4 +1,4 @@
-import { checkAuth } from "@/app/actions/user";
+import { checkSession } from "@/app/actions/user";
 import { getAllWorkspace } from "@/app/actions/workspace";
 import { redirect } from "next/navigation";
 
@@ -11,21 +11,21 @@ type Props = {
 export default async function Page({params}: Props){
 
   const param = await params;
-  const auth = await checkAuth()
+  const auth = await checkSession()
 
   if(!auth){
     redirect('auth/sign-in')
   }
 
-  const allWorkspace = await getAllWorkspace(auth.session?.user.id as string)
+  // const allWorkspace = await getAllWorkspace(auth.session?.user.id as string)
   return (
     <>
-      <h1>Hello, {param.slug}</h1>
+      {/* <h1>Hello, {param.slug}</h1>
       {allWorkspace.data?.map((w) => {
         return <div key={w.id}>
           <h1>{w.name}</h1>
         </div>
-      })}
+      })} */}
     </>
   )
 }

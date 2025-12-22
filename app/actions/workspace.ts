@@ -1,19 +1,19 @@
 "use server";
 
 import prisma from "@/lib/prisma";
-import { checkAuth } from "./user";
+import { checkSession } from "./user";
 import { createGymInput } from "@/schema";
 import { redirect } from "next/navigation";
 
 export const getWorkspaces = async () => {
-  const auth = await checkAuth();
+  const auth = await checkSession();
 
   if (!auth) return { status: 404, message: "Unauthenticated" };
 
   try {
     const workspaces = await prisma.user.findUnique({
       where: {
-        id: auth.session?.user.id,
+        id: auth.userId,
       },
       select: {
         workspaces: true,
@@ -52,39 +52,40 @@ export const createGymAction = async ({
   maxMembers,
   logo,
 }: createGymInput) => {
-  const auth = await checkAuth();
+  const auth = await checkSession();
 
   if (!auth) return { status: 404, message: "Unauthorized" };
 
   const authorized = await prisma.user.findUnique({
     where: {
-      id: auth.session?.user.id
-    }
-  })
-
-
+      id: auth.userId,
+    },
+  });
 
   try {
-    const createWorkspace = await prisma.user.create({
+    if (!authorized) return { status: 404, message: "User not found" };
+
+    const createWorkspace = await prisma.workspace.create({
       data: {
-        workspaces: {
-          create: {
-            name,
-            email,
-            slug,
-            phone,
-            addressLine1,
-            city,
-            state,
-            postalCode,
-            openDays,
-            openingTime,
-            closingTime,
-            country,
-            maxMembers,
-            logo,
+        user: {
+          connect: {
+            id: authorized.id,
           },
         },
+        name,
+        email,
+        slug,
+        phone,
+        addressLine1,
+        city,
+        state,
+        postalCode,
+        openDays,
+        openingTime,
+        closingTime,
+        country,
+        maxMembers,
+        logo,
       },
     });
   } catch (error) {
@@ -93,7 +94,7 @@ export const createGymAction = async ({
 };
 
 export const getAllWorkspace = async (userId: string) => {
-  const auth = await checkAuth();
+  const auth = await checkSession();
   if (!auth) {
     redirect("/auth/sign-in");
   }
@@ -101,7 +102,7 @@ export const getAllWorkspace = async (userId: string) => {
   try {
     const workspace = await prisma.workspace.findMany({
       where: {
-        userId: auth.session?.user.id,
+        userId: auth.userId,
       },
     });
 

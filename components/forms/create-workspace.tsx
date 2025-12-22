@@ -15,6 +15,7 @@ import { createGymInput, createGymSchema } from "@/schema";
 import { zodResolver } from "@hookform/resolvers/zod";
 import { useMutationData } from "@/hooks/use-mutation";
 import { createGymAction } from "@/app/actions/workspace";
+import { toast } from "sonner";
 
 export default function CreateWorkspace() {
   const { register, handleSubmit } = useForm<createGymInput>({
