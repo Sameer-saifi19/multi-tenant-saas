@@ -14,11 +14,11 @@ export async function proxy(req: NextRequest) {
   const isOnAuthRoute = nextUrl.pathname.startsWith("/auth");
 
   if (isOnProtectedRoute && !isLoggedIn) {
-    return NextResponse.redirect(new URL("/auth/login", req.url));
+    return NextResponse.redirect(new URL("/auth/sign-in", req.url));
   }
 
   if (isOnAuthRoute && isLoggedIn) {
-    return NextResponse.redirect(new URL("/dashboard", req.url));
+    return NextResponse.redirect(new URL("/auth/sign-in", req.url));
   }
 
   return res;

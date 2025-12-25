@@ -17,7 +17,7 @@ export const OauthButton = ({ signUp }: OauthButtonProps) => {
 
     await signIn.social({
       provider: "google",
-      callbackURL: "/dashboard",
+      callbackURL: "/auth/callback",
       errorCallbackURL: "/auth/sign-in/error",
     });
 

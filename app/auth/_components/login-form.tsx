@@ -34,7 +34,7 @@ export default function LoginForm() {
       setIsPending(false);
       toast.error("Invalid Email or password");
     } else {
-      router.push("/dashboard");
+      router.push("/auth/callback");
     }
   }
 
@@ -109,7 +109,7 @@ export default function LoginForm() {
                   disabled={isPending}
                   className="w-full text-white"
                 >
-                  signin to Fitx
+                  sign in to Fitx
                 </Button>
               </div>
             </div>

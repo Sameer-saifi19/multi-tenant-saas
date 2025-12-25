@@ -96,11 +96,71 @@ export const currentUser = async () => {
     where: {
       id: session?.user.id,
     },
+    include: {
+      workspaces: {
+        where: {
+          userId: session?.user.id,
+        },
+      },
+    },
   });
 
   if (!user) {
     return { status: 401, message: "Unauthorized" };
   }
 
-  return user;
+  return { user };
+};
+
+export const onAuthenticateUser = async () => {
+  const auth = await checkSession();
+
+  if (!auth) return { status: 403, message: "Unauthenticated" };
+
+  try {
+    const userExist = await prisma.user.findUnique({
+      where: {
+        id: auth.userId,
+      },
+      include: {
+        workspaces: {
+          where: {
+            id: auth.userId,
+          },
+        },
+      },
+    });
+
+    if (userExist)
+      return {
+        status: 200,
+        user: userExist,
+      };
+
+    const newUser = await prisma.user.update({
+      where: {
+        id: auth.userId,
+      },
+      data: {
+        workspaces: {
+          create: [],
+        },
+        subsription: {
+          create: {},
+        },
+      },
+      include: {
+        workspaces: true,
+      },
+    });
+
+    if (newUser) {
+      return { status: 201, data: newUser };
+    }
+
+    return { status: 400 };
+  } catch (error) {
+    console.log(error);
+    return { status: 500, message: "Something went wrong" };
+  }
 };

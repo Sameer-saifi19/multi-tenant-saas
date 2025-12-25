@@ -16,7 +16,6 @@ export const createGymSchema = z.object({
   postalCode: z.string().optional(),
   openingTime: z.string(),
   closingTime: z.string(),
-  openDays: z.string(),
   maxMembers: z.number(),
 });
 

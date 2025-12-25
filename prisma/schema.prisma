@@ -31,7 +31,7 @@ model Workspace {
   slug         String   @unique
   createdAt    DateTime @default(now())
   updatedAt    DateTime @updatedAt
-  phone        String
+  phone        String?
   email        String
   addressLine1 String?
   city         String?
@@ -40,7 +40,6 @@ model Workspace {
   postalCode   String?
   openingTime  String
   closingTime  String
-  openDays     String
   maxMembers   Int
   user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
   userId       String   @db.Uuid

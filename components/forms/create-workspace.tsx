@@ -28,11 +28,21 @@ export default function CreateWorkspace() {
     createGymAction
   );
 
-  const onSubmit = async (data: createGymInput) => {
-    mutate(data);
+  const onSubmit = async (formData: createGymInput) => {
+    mutate(formData, {
+      onSuccess: (res) => {
+        if (res.status !== 200) {
+          toast(res.message);
+          return;
+        }
+        console.log("workspace created", res.data);
+      },
+      onError: (err) => {
+        toast(err.message);
+      },
+    });
     console.log(error);
   };
-
 
   return (
     <>
@@ -134,19 +144,12 @@ export default function CreateWorkspace() {
                     <Input {...register("closingTime")} type="time" required />
                   </div>
 
-                  <div className="grid gap-3">
-                    <Input
-                      {...register("openDays")}
-                      type="text"
-                      placeholder="mon to sat"
-                    />
-                  </div>
-
                   <div>
                     <Input
                       type="number"
                       {...register("maxMembers", { valueAsNumber: true })}
                       placeholder="Maximum members"
+                      required
                     />
                   </div>
 
@@ -164,3 +167,7 @@ export default function CreateWorkspace() {
     </>
   );
 }
+
+
+
+
