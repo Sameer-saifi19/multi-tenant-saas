@@ -1,3 +1,5 @@
+'use client'
+
 import { checkSession } from "@/app/actions/user";
 import { getAllWorkspace } from "@/app/actions/workspace";
 
@@ -6,8 +8,10 @@ type Props = {
 };
 
 const page = async (props: Props) => {
-  const auth = await checkSession();
 
+  
+  const auth = await checkSession();
+  
   const getUserWorkspace = await getAllWorkspace(auth.userId);
   if (!getUserWorkspace || getUserWorkspace.data?.length! < 1)
     return <h1>No workspace </h1>;

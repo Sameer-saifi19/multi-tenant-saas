@@ -1,6 +1,7 @@
 "use client";
 
 import { Button } from "@/components/ui/button";
+import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { signOut } from "@/lib/auth-client";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
@@ -31,13 +32,13 @@ export const SignOutButton = () => {
   }
 
   return (
-    <Button
+    <DropdownMenuItem
       onClick={handleClick}
-      size="sm"
       variant="destructive"
       disabled={isPending}
+      
     >
       Sign out
-    </Button>
+    </DropdownMenuItem>
   );
 };

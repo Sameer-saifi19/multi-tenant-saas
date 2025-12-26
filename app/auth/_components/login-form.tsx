@@ -34,7 +34,7 @@ export default function LoginForm() {
       setIsPending(false);
       toast.error("Invalid Email or password");
     } else {
-      router.push("/auth/callback");
+      router.push("/home");
     }
   }
 

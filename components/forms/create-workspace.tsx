@@ -60,100 +60,78 @@ export default function CreateWorkspace() {
 
             <CardContent>
               <form onSubmit={handleSubmit(onSubmit)}>
-                <div className="flex flex-col gap-6">
-                  <div className="grid gap-3">
-                    <Input
-                      {...register("name")}
-                      type="text"
-                      placeholder="eg. Iron den gym"
-                      required
-                    />
-                  </div>
+                <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+                  <Input
+                    {...register("name")}
+                    type="text"
+                    placeholder="eg. Iron den gym"
+                    required
+                  />
 
-                  <div className="grid gap-3">
-                    <Input
-                      {...register("slug")}
-                      type="text"
-                      placeholder="domain.com/iron-den"
-                      required
-                    />
-                  </div>
+                  <Input
+                    {...register("slug")}
+                    type="text"
+                    placeholder="gym slug"
+                    required
+                  />
 
-                  <div className="grid gap-3">
-                    <Input
-                      {...register("email")}
-                      type="email"
-                      placeholder="john@example.com"
-                      required
-                    />
-                  </div>
+                  <Input
+                    {...register("email")}
+                    type="email"
+                    placeholder="john@example.com"
+                    required
+                  />
 
-                  <div className="grid gap-3">
-                    <Input
-                      {...register("phone")}
-                      type="text"
-                      placeholder="775-224-7654"
-                    />
-                  </div>
+                  <Input
+                    {...register("phone")}
+                    type="text"
+                    placeholder="775-224-7654"
+                  />
 
-                  <div className="grid gap-3">
-                    <Input
-                      {...register("addressLine1")}
-                      type="text"
-                      placeholder="172, new york USA"
-                    />
-                  </div>
+                  <Input
+                    {...register("addressLine1")}
+                    type="text"
+                    placeholder="172, new york USA"
+                  />
 
-                  <div className="grid gap-3">
-                    <Input
-                      {...register("city")}
-                      type="text"
-                      placeholder="Los angeles"
-                    />
-                  </div>
+                  <Input
+                    {...register("city")}
+                    type="text"
+                    placeholder="Los angeles"
+                  />
 
-                  <div className="grid gap-3">
-                    <Input
-                      {...register("state")}
-                      type="text"
-                      placeholder="California"
-                    />
-                  </div>
+                  <Input
+                    {...register("state")}
+                    type="text"
+                    placeholder="California"
+                  />
 
-                  <div className="grid gap-3">
-                    <Input
-                      {...register("country")}
-                      type="text"
-                      placeholder="USA"
-                    />
-                  </div>
+                  <Input
+                    {...register("country")}
+                    type="text"
+                    placeholder="USA"
+                  />
 
-                  <div className="grid gap-3">
-                    <Input
-                      {...register("postalCode")}
-                      type="text"
-                      placeholder="16253"
-                    />
-                  </div>
+                  <Input
+                    {...register("postalCode")}
+                    type="text"
+                    placeholder="16253"
+                  />
 
-                  <div className="grid gap-3">
-                    <Input {...register("openingTime")} type="time" required />
-                  </div>
+                  <Input
+                    type="number"
+                    {...register("maxMembers", { valueAsNumber: true })}
+                    placeholder="Maximum members"
+                    required
+                  />
+                  
+                  <Input {...register("openingTime")} type="time" required />
 
-                  <div className="grid gap-3">
-                    <Input {...register("closingTime")} type="time" required />
-                  </div>
+                  <Input {...register("closingTime")} type="time" required />
 
-                  <div>
-                    <Input
-                      type="number"
-                      {...register("maxMembers", { valueAsNumber: true })}
-                      placeholder="Maximum members"
-                      required
-                    />
-                  </div>
 
-                  <div className="flex flex-col gap-3">
+                  {/* Full width button */}
+                  <div className="md:col-span-2">
                     <Button type="submit" className="w-full text-white">
                       Create Gym
                     </Button>
@@ -167,7 +145,3 @@ export default function CreateWorkspace() {
     </>
   );
 }
-
-
-
-

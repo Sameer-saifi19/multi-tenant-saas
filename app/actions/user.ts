@@ -109,7 +109,7 @@ export const currentUser = async () => {
     return { status: 401, message: "Unauthorized" };
   }
 
-  return { user };
+  return {user} ;
 };
 
 export const onAuthenticateUser = async () => {

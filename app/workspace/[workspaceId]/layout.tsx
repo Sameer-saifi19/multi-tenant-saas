@@ -1,5 +1,12 @@
 import { currentUser } from "@/app/actions/user";
-import { hasAccessToWorkspace } from "@/app/actions/workspace";
+import { getAllWorkspace, hasAccessToWorkspace } from "@/app/actions/workspace";
+import AppSidebar from "@/components/global/sidebar/sidebar";
+import { SidebarProvider } from "@/components/ui/sidebar";
+import {
+  dehydrate,
+  HydrationBoundary,
+  QueryClient,
+} from "@tanstack/react-query";
 import { redirect } from "next/navigation";
 
 type Props = {
@@ -8,17 +15,28 @@ type Props = {
 };
 
 export default async function WorkspaceLayout({ children, params }: Props) {
-  const auth = await currentUser();
-
+  const user = await currentUser();
   const { workspaceId } = await params;
+  const workpsaceResponse = await getAllWorkspace(user.user?.id as string);
+  const workpsace = workpsaceResponse.data || [];
 
-  const hasAccess = await hasAccessToWorkspace(workspaceId);
+  const query = new QueryClient();
 
-  
-  console.log(hasAccess)
   return (
     <>
-      <div className="mt-4">{children}</div>
+      <HydrationBoundary state={dehydrate(query)}>
+        <SidebarProvider defaultOpen={true}>
+          <AppSidebar
+            workspaces={workpsace}
+            user={user.user!}
+            activeWorkspaceId={workspaceId}
+          >
+            <div className="w-full pt-28 p-6 overflow-y-scroll overflow-x-hidden">
+              <div className="mt-4">{children}</div>
+            </div>
+          </AppSidebar>
+        </SidebarProvider>
+      </HydrationBoundary>
     </>
   );
 }

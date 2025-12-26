@@ -77,7 +77,7 @@ export const getAllWorkspace = async (userId: string) => {
       },
     });
 
-    if (!workspace || workspace.length < 1)
+    if (workspace.length === 0)
       return {
         status: 404,
         message: "No workspace found",
@@ -108,7 +108,7 @@ export const hasAccessToWorkspace = async (workspaceId: string) => {
 
     if (findFirstWorksapce)
       return {
-        status: 400,
+        status: 200,
         message: "got first workspace",
         data: findFirstWorksapce,
       };
