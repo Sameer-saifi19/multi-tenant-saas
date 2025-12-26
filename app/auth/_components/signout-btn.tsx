@@ -3,6 +3,7 @@
 import { Button } from "@/components/ui/button";
 import { DropdownMenuItem } from "@/components/ui/dropdown-menu";
 import { signOut } from "@/lib/auth-client";
+import { LogOut } from "lucide-react";
 import { useRouter } from "next/navigation";
 import { useState } from "react";
 import { toast } from "sonner";
@@ -24,7 +25,7 @@ export const SignOutButton = () => {
           toast.error(ctx.error.message);
         },
         onSuccess: () => {
-          toast.success("You&apos;ve logged out. See you soon!");
+          toast.success("You have logged out. See you soon!");
           router.push("/auth/sign-in");
         },
       },
@@ -36,8 +37,10 @@ export const SignOutButton = () => {
       onClick={handleClick}
       variant="destructive"
       disabled={isPending}
+      className="cursor-pointer"
       
     >
+      <LogOut className="h-[1.2rem] w-[1.2rem] mr-2" />
       Sign out
     </DropdownMenuItem>
   );

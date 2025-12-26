@@ -21,3 +21,9 @@ export interface appSidebarProps {
   user: sidebarUser
   workspaces: sidebarWorkspace[]
 }
+
+export interface appNavbarProps {
+  children?: React.ReactNode
+  user: sidebarUser,
+  workspaces: sidebarWorkspace[]
+}

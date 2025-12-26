@@ -11,7 +11,7 @@ const Home = async () => {
       <pre>{JSON.stringify(session, null, 2)}</pre>
 
       <div className="flex gap-6">
-        <Link href="/onboarding">
+        <Link href="/create-workspace">
           <Button>Create Workspace</Button>
         </Link>
 

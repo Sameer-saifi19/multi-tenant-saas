@@ -20,17 +20,10 @@ import {
   SidebarMenuButton,
   SidebarMenuItem,
 } from "@/components/ui/sidebar";
-import { ChevronUp, Dumbbell, LogOut, User2 } from "lucide-react";
+import { Dumbbell } from "lucide-react";
 import Link from "next/link";
 import SidebarItems from "./sidebar-items";
-import {
-  DropdownMenu,
-  DropdownMenuContent,
-  DropdownMenuItem,
-  DropdownMenuTrigger,
-} from "@/components/ui/dropdown-menu";
-import { SignOutButton } from "@/app/auth/_components/signout-btn";
-import { appSidebarProps } from "@/types/sidebar.types";
+import { appSidebarProps } from "@/types/workspaceLayout.types";
 import { useRouter } from "next/navigation";
 
 const AppSidebar = ({

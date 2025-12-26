@@ -16,7 +16,7 @@ const Workspace = async () => {
   }
 
   if(hasAccess.status === 400 || hasAccess.status === 500){
-    return redirect('/onboarding')
+    return redirect('/create-workspace')
   }
 
   return <div>Workspace</div>;

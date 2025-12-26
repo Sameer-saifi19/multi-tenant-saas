@@ -1,5 +1,6 @@
 import { currentUser } from "@/app/actions/user";
-import { getAllWorkspace, hasAccessToWorkspace } from "@/app/actions/workspace";
+import { getAllWorkspace } from "@/app/actions/workspace";
+import Navbar from "@/components/global/navbar/index";
 import AppSidebar from "@/components/global/sidebar/sidebar";
 import { SidebarProvider } from "@/components/ui/sidebar";
 import {
@@ -7,7 +8,6 @@ import {
   HydrationBoundary,
   QueryClient,
 } from "@tanstack/react-query";
-import { redirect } from "next/navigation";
 
 type Props = {
   params: { workspaceId: string };
@@ -35,6 +35,11 @@ export default async function WorkspaceLayout({ children, params }: Props) {
               <div className="mt-4">{children}</div>
             </div>
           </AppSidebar>
+          <main className="w-full">
+            <div className="px-4">
+              <Navbar/>
+            </div>
+          </main>
         </SidebarProvider>
       </HydrationBoundary>
     </>
