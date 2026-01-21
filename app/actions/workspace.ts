@@ -40,25 +40,23 @@ export const createGymAction = async (formData: createGymInput) => {
   const auth = await checkSession();
   if (!auth) return { status: 403, message: "Unauthenticated" };
 
-  const parsed = createGymSchema.safeParse(formData);
+  const parsedData = createGymSchema.safeParse(formData);
 
-  if (!parsed.success) {
+  if (!parsedData.success) {
     return {
       status: 400,
       message: "Invalid input data",
-      error: parsed.error,
+      error: parsedData.error,
     };
   }
 
   try {
     const createWorkspace = await prisma.workspace.create({
       data: {
-        ...parsed.data,
+        ...parsedData.data,
         userId: auth.userId,
       },
     });
-
-    return { status: 200, data: createWorkspace };
   } catch (error) {
     return { status: 500, message: "Internal Server Error" };
   }
@@ -77,7 +75,7 @@ export const getAllWorkspace = async (userId: string) => {
       },
     });
 
-    if (workspace.length === 0)
+    if (!workspace || workspace.length < 1)
       return {
         status: 404,
         message: "No workspace found",
@@ -108,7 +106,7 @@ export const hasAccessToWorkspace = async (workspaceId: string) => {
 
     if (findFirstWorksapce)
       return {
-        status: 200,
+        status: 400,
         message: "got first workspace",
         data: findFirstWorksapce,
       };

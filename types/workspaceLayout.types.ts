@@ -17,7 +17,7 @@ export interface workspaceLayoutProps {
 
 export interface appSidebarProps {
   activeWorkspaceId: string;
-  children: React.ReactNode;
+  children?: React.ReactNode;
   user: sidebarUser
   workspaces: sidebarWorkspace[]
 }

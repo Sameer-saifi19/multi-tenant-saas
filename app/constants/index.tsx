@@ -3,22 +3,22 @@ import { Bell, CreditCard, Home, Library, Settings } from "lucide-react";
 export const sidebarItemContent
  = (workspaceId: string): {title:string, href: string; icon:React.ReactNode}[] => [
     {title:"Home",
-    href:`/dashboard/${workspaceId}/home`, 
+    href:`/workspace/${workspaceId}/`, 
     icon: <Home className="h-5 w-5"/>},
 
-    {title:"My Library", 
-    href:`/dashboard/${workspaceId}`, 
+    {title:"Members", 
+    href:`/workspace/${workspaceId}/members`, 
     icon: <Library className="h-5 w-5"/>},
 
     {title:"Notifications", 
-    href:`/dashboard/${workspaceId}/notifications`, icon: <Bell className="h-5 w-5"/>},
+    href:`/workspace/${workspaceId}/notifications`, icon: <Bell className="h-5 w-5"/>},
 
     {title:"Billing",
-    href:`/dashboard/${workspaceId}/billing`, 
+    href:`/workspace/${workspaceId}/billing`, 
     icon: <CreditCard className="h-5 w-5"/>},
 
     {title:"Settings", 
-    href:`/dashboard/${workspaceId}/settings`,
+    href:`/workspace/${workspaceId}/settings`,
     icon: <Settings className="h-5 w-5"/>},
  
 

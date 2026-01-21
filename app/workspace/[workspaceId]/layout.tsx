@@ -29,15 +29,11 @@ export default async function WorkspaceLayout({ children, params }: Props) {
           <AppSidebar
             workspaces={workpsace}
             user={user.user!}
-            activeWorkspaceId={workspaceId}
-          >
-            <div className="w-full pt-28 p-6 overflow-y-scroll overflow-x-hidden">
-              <div className="mt-4">{children}</div>
-            </div>
-          </AppSidebar>
-          <main className="w-full">
-            <div className="px-4">
-              <Navbar/>
+            activeWorkspaceId={workspaceId} />
+           <main className="w-full h-screen">
+            <Navbar />
+            <div className="p-6">
+              {children}
             </div>
           </main>
         </SidebarProvider>
